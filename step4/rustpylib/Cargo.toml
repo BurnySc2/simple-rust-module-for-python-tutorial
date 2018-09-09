@@ -1,0 +1,13 @@
+[package]
+name = "rustpylib"
+version = "0.1.0"
+authors = ["BurnySc2 <gamingburny@gmail.com>"]
+
+
+[dependencies.cpython]
+version = "0.2"
+features = ["extension-module"]
+
+[lib]
+name = "rustpylib"
+crate-type = ["cdylib"]
