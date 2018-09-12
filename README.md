@@ -37,14 +37,11 @@ In the end, the comment that helped me the most was https://github.com/dgrunwald
     use cpython::ObjectProtocol;
     // see http://dgrunwald.github.io/rust-cpython/doc/cpython/struct.PyObject.html#impl-ObjectProtocol
     
-    use std::collections::HashSet;
-    
     py_module_initializer!(rustpylib, initrustpylib, PyInit_rustpylib, |py, m| {
         try!(m.add(py, "__doc__", "This module is implemented in Rust."));
         try!(m.add(py, "integer_test", py_fn!(py, integer_test_py(my_py_number: u32))));
         try!(m.add(py, "string_test", py_fn!(py, string_test_py(my_py_string: String))));
         try!(m.add(py, "list_test", py_fn!(py, list_test_py(my_list: PyObject))));
-    //    try!(m.add(py, "set_test", py_fn!(py, set_test_py(my_list: PyObject))));
         try!(m.add(py, "class_test", py_fn!(py, class_test_py(p1: PyObject, p2: PyObject))));
         Ok(())
     });
@@ -66,7 +63,6 @@ In the end, the comment that helped me the most was https://github.com/dgrunwald
     }
     
     // https://github.com/dgrunwald/rust-cpython/issues/94
-    // how to call a python function? like list.append()
     fn list_test_py(py: Python, my_list: PyObject) -> PyResult<PyList> {
         let mut test_vec = vec![1, 2, 3, 4];
         let my_rust_list = my_list.extract::<Vec<i32>>(py).unwrap();
@@ -74,7 +70,6 @@ In the end, the comment that helped me the most was https://github.com/dgrunwald
         let my_extended_list = test_vec.to_py_object(py);
         return Ok(my_extended_list);
     }
-    
     
     struct RustPoint{
         x: i32,
